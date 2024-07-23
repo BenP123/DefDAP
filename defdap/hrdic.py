@@ -311,7 +311,7 @@ class Map(base.Map):
                 per = [np.nanpercentile(self.data[c][i], p) for p in percentiles]
                 print(str_format.format(c+''.join([str(t+1) for t in i]), *per))
 
-    def set_crop(self, *, left=None, right=None, top=None, bottom=None,
+    def set_crop(self, left=None, right=None, top=None, bottom=None,
                  update_homog_points=False):
         """Set a crop for the DIC map.
 
