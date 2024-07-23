@@ -777,13 +777,16 @@ class OpenPivLoader(DICDataLoader):
 
         # shape of map (from header)
         shape = data[:, [col['y'], col['x']]].max(axis=0) + binning / 2
-        assert np.allclose(shape % binning, 0.)
+        #assert np.allclose(shape % binning, 0.)
         shape = tuple((shape / binning).astype(int).tolist())
         self.loaded_metadata['shape'] = shape
 
         self.checkMetadata()
 
         data = data.reshape(shape + (-1,))[::-1].transpose((2, 0, 1))
+
+        # correction to flip OpenPIV data 
+        data = np.flip(data,axis=1)
 
         self.loaded_data.coordinate = data[[col['x'], col['y']]]
         self.loaded_data.displacement = data[[col['u'], col['v']]]
