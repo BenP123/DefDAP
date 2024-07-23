@@ -787,6 +787,7 @@ class OpenPivLoader(DICDataLoader):
 
         # correction to flip OpenPIV data 
         data = np.flip(data,axis=1)
+        data[col['v']] = -1*data[col['v']]
 
         self.loaded_data.coordinate = data[[col['x'], col['y']]]
         self.loaded_data.displacement = data[[col['u'], col['v']]]
