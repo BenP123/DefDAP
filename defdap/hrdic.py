@@ -512,12 +512,23 @@ class Map(base.Map):
         """ Apply mask to all DIC map data by setting masked values to nan.
 
         """
-        for comp in ('max_shear',
-                     'e11', 'e12', 'e22',
-                     'f11', 'f12', 'f21', 'e22',
-                     'x_map', 'y_map'):
-            # self.data[comp] = np.where(self.mask == True, np.nan, self.data[comp])
-            self.data[comp][self.mask] = np.nan
+        # BP 2024/07/24 fix for different components 
+        # max shear
+        comp = 'max_shear' 
+        self.data[comp][self.mask] = np.nan
+
+        # strain components 
+        comp = 'e' 
+        self.data[comp][:,:,self.mask] = np.nan
+
+        # deformation gradient components 
+        comp = 'f' 
+        self.data[comp][:,:,self.mask] = np.nan
+
+        # displacements 
+        comp = 'displacement' 
+        self.data[comp][:,self.mask] = np.nan
+
 
     def set_pattern(self, img_path, window_size):
         """Set the path to the image of the pattern.
